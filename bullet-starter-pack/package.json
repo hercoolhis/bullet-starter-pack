@@ -1,0 +1,14 @@
+{
+  "name": "bullet-starter-pack",
+  "version": "1.0.0",
+  "description": "bullet proof starter pack for node/express applications",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "starter-pack"
+  ],
+  "author": "hercoolhis",
+  "license": "ISC"
+}
