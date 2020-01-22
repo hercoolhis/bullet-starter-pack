@@ -1,6 +1,6 @@
-const config = require("./config"),
+const config = require("./src/config"),
 express = require("express"),
-loaders = require("./loaders");
+loaders = require("./src/loaders");
 
 
 async function startServer() {

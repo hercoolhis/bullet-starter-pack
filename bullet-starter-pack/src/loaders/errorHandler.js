@@ -1,6 +1,24 @@
 const logger = require("./logger");
 
-module.exports = (err, req, res, next) => {
+const handle404 = (req, res, next) => {
+    const err = new Error('This endpoint not found');
+    err['status'] = 404;
+    next(err);
+}
+
+const apiErrorHandler = (err, req, res, next) => {
     logger.error(err.message);
-    res.status(err.statusCode || 500). send(err.message);
+    res.status(err.statusCode || 500).send(err.message);
+}
+
+const unCaughtExceptionAndUnhandledRejection = (error) => {
+    logger.error(error.message, error);
+    process.exit(1);        
+}
+
+
+module.exports = {
+    handle404,
+    apiErrorHandler,
+    unCaughtExceptionAndUnhandledRejection
 }

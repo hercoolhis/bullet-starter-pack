@@ -1,15 +1,30 @@
 const bodyParser = require("body-parser"),
-errorHandler = require("./errorHandler");
+{ apiErrorHandler, handle404, unCaughtExceptionAndUnhandledRejection } = require("./errorHandler"),
+config = require("../config"),
+routes = require("../api"),
+cors = require("cors");
 
 
 module.exports = async (app) => {
-    app.use(bodyParser.json());
-    app.use(errorHandler);
 
-    app.get("/status", (req, res) => {
-        
-        throw new Error("Play play error")       
-        //res.send("Express app activated");
+    app.use(bodyParser.json());  
+    app.use(cors());
+
+
+
+    app.use(config.apiPath, routes());
+
+
+
+    app.use(apiErrorHandler);
+    app.use(handle404);
+
+    process.on('uncaughtException', (ex) => {
+        unCaughtExceptionAndUnhandledRejection(error);
+    })
+    
+    process.on('unhandledRejection', (error) => {
+        unCaughtExceptionAndUnhandledRejection(error);
     })
 
     return app;
