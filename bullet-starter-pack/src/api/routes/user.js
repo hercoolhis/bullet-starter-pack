@@ -7,5 +7,5 @@ route = Router();
 module.exports = (app) => {
     app.use('/users', route);
 
-    route.get('', getAllUsers);
+    route.get('/all', getAllUsers);
 }

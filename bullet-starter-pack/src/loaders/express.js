@@ -15,7 +15,7 @@ module.exports = async (app) => {
     app.use(config.apiPath, routes());
 
 
-
+    //error handling
     app.use(apiErrorHandler);
     app.use(handle404);
 

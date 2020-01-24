@@ -1,5 +1,6 @@
 const config = require("./src/config"),
 express = require("express"),
+logger = require("./src/loaders/logger"),
 loaders = require("./src/loaders");
 
 
@@ -11,17 +12,17 @@ async function startServer() {
         if (appLoaded) {
             app.listen(config.port, (error) => {
                 if (error) {
-                    console.log("Server failed to start", error.message);
+                    logger.error(`Server failed to start, ${error.message}`);                    
                     process.exit(1);                
                 }
-                console.log(`your server is ready at port ${config.port}`);
+                logger.info(`your server is ready at port ${config.port}`);                
             })
         } else {
             throw new Error("Couldn't load app");
         } 
 
     } catch (error) {
-        console.log(error.message);
+        logger.error(error.message);        
     }
 }
 
