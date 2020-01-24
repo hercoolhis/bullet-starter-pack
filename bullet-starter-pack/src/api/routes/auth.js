@@ -1,7 +1,7 @@
 const { checkIfUserExists } = require("../middlewares/user"),
+{ checkSignUp } = require("../middlewares/bodyValidator"),
 { Router } = require("express"),
-authController = require("../controllers/authController"),
-
+{ userSignUp } = require("../controllers/authController"),
 route = Router();
 
 
@@ -9,8 +9,8 @@ route = Router();
 module.exports = (app) => {
     app.use('/auth', route);
 
-    //signup route ...validate request first
-    route.post('/signup', [checkIfUserExists], authController.userSignUp);
+    //signup route ...validate request body first
+    route.post('/signup', [checkSignUp(), checkIfUserExists], userSignUp);
 
     //signin route
     

@@ -9,11 +9,12 @@ module.exports = class AuthService {
     
     async SignUp(payload) {
         try {
-            //get input            
+            //get input  
+            const { email, password } = payload;          
             
             //hash password
             logger.info("Hashing Password");
-            let hashedPassword = await bcrypt.hash(payload.password, 10);
+            let hashedPassword = await bcrypt.hash(password, 10);
 
             //create user ...delegate to data access layer later
             logger.info("Creating User");
@@ -25,7 +26,7 @@ module.exports = class AuthService {
             );           
 
             //generate jwt
-            let token = jwt.sign({ email: payload.email}, secret),
+            let token = jwt.sign({ email }, secret),
             user = userRecord.toObject();
 
             //remove password from user object
