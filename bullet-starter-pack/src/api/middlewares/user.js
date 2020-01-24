@@ -14,7 +14,7 @@ const checkIfUserExists = async ({body: { email }}, res, next) => {
 
     } catch ({ message }) {
         logger.error(message);
-        res.status(209).json({ message });             
+        throw new Error(message);                  
     }
 }
 
