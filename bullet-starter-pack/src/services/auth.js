@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs"),
 logger = require("../loaders/logger"),
 jwt = require("jsonwebtoken"),
 { secret } = require("../config"),
-User = require("../models/user");
+{ createUser } = require("../data-access/user"),
+{ findUser } = require("../data-access/user");
 
 
 module.exports = class AuthService {
@@ -23,12 +24,10 @@ module.exports = class AuthService {
 
             //create user ...delegate to data access layer later
             logger.info("Creating User");
-            const userRecord = await User.create(
-                {
-                    ...payload,
-                    password: hashedPassword
-                }
-            );           
+            const userRecord = await createUser({
+                ...payload,
+                password: hashedPassword
+            });         
 
             //generate jwt
             logger.info("Generating token");
@@ -54,7 +53,7 @@ module.exports = class AuthService {
         //get input
         const { email, password } = payload;    
         //find user ...delegate to data access layer later
-        let userRecord = await User.findOne({ email });
+        let userRecord = await findUser({ email });
        
         if (!userRecord) {
             throw new Error('User not registered');
@@ -82,4 +81,5 @@ module.exports = class AuthService {
     generateToken(email) {
         return jwt.sign({ email }, secret, { expiresIn: '1h' });
     }
+
 }

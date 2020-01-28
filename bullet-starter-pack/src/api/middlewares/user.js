@@ -1,12 +1,13 @@
-const User = require("../../models/user"),
+const { findUser } = require("../../data-access/user"),
 logger = require("../../loaders/logger");
+
 
 
 const checkIfUserExists = async ({body: { email }}, res, next) => {
     try {
-        const checkUser = await User.findOne({ email })
+        const checkUser = await findUser({ email }); 
         
-        if (checkUser) {
+        if (checkUser.length > 0) {
             throw new Error("User already exists")
         } else {
             next();
